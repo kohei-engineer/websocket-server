@@ -1,4 +1,6 @@
 import asyncio
+import threading
+import tkinter
 import websockets
 
 # Connected WebSocket clients
@@ -31,9 +33,25 @@ async def ws_server(host: str = "0.0.0.0", port: int = 8000):
         print(f"WebSocket server started on {host}:{port}")
         await asyncio.Future()
 
-def main():
-    """main function to start WebSocket server"""
+def start_ws_server():
+    """Run the WebSocket server using asyncio."""
     asyncio.run(ws_server())
+
+def init_tkinter():
+    """Initialize Tkinter GUI and return the root window."""
+    root = tkinter.Tk()
+    root.title('WebSocket Server')
+    root.geometry('400x300')
+
+    text_widget = tkinter.Text(root, state='disabled')
+    text_widget.pack(expand=True, fill='both', padx=5, pady=5)
+
+    root.mainloop()
+
+def main():
+    """main function to start WebSocket server and Tkinter GUI."""
+    threading.Thread(target=start_ws_server, daemon=True).start()
+    init_tkinter()
     print('WebSocket server stopped')
 
 if __name__ == "__main__":
