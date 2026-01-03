@@ -13,7 +13,7 @@ class WebSocketServer:
     def __init__(self, host: str = "0.0.0.0", port: int = 8000) -> None:
         self.host = host
         self.port = port
-        self.clients = set()
+        self._clients = set()
         self._running = False
 
     @property
@@ -27,7 +27,7 @@ class WebSocketServer:
         Args:
             ws (websockets.WebSocketServerProtocol): Connected WebSocket client.
         """
-        self.clients.add(ws)
+        self._clients.add(ws)
         print("Client connected")
         try:
             async for msg in ws:
@@ -35,7 +35,7 @@ class WebSocketServer:
         except websockets.ConnectionClosed:
             print("Client disconnected")
         finally:
-            self.clients.remove(ws)
+            self._clients.remove(ws)
 
     async def run_server(self) -> None:
         """Start the WebSocket server on the specified host and port."""
