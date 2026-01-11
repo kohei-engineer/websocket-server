@@ -1,6 +1,8 @@
 import asyncio
 import threading
+
 import websockets
+
 
 class WebSocketServer:
     """WebSocketServer class to handle WebSocket connections.
@@ -8,9 +10,10 @@ class WebSocketServer:
     Args:
         host (str, optional): IP address to bind the server. Defaults to "0.0.0.0".
         port (int, optional): Port number to bind the server. Defaults to 8000.
+
     """
 
-    def __init__(self, host: str = "0.0.0.0", port: int = 8000) -> None:
+    def __init__(self, host: str = "127.0.0.1", port: int = 8000) -> None:
         self.host = host
         self.port = port
         self._clients = set()
@@ -26,6 +29,7 @@ class WebSocketServer:
 
         Args:
             ws (websockets.WebSocketServerProtocol): Connected WebSocket client.
+
         """
         self._clients.add(ws)
         print("Client connected")
@@ -48,4 +52,7 @@ class WebSocketServer:
         """Start the WebSocket server in a daemon thread."""
         if self._running:
             return
-        threading.Thread(target=lambda: asyncio.run(self.run_server()), daemon=True).start()
+        threading.Thread(
+            target=lambda: asyncio.run(self.run_server()),
+            daemon=True,
+        ).start()
