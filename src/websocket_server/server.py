@@ -8,7 +8,7 @@ class WebSocketServer:
     """WebSocketServer class to handle WebSocket connections.
 
     Args:
-        host (str, optional): IP address to bind the server. Defaults to "0.0.0.0".
+        host (str, optional): IP address to bind the server. Defaults to "127.0.0.1".
         port (int, optional): Port number to bind the server. Defaults to 8000.
 
     """
